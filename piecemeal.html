@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="智能社 - zhinengshe.com" />
+<meta name="copyright" content="智能社 - zhinengshe.com" />
+<title>智能社 - www.zhinengshe.com</title>
+<style>
+#div1{ position:relative;width:700px; height:400px; background:url(images/1.jpg) no-repeat; margin:50px auto;}
+#div1 span{ position:absolute;left:0;top:0; width:100px; height:100px; background:url(images/0.jpg) no-repeat; 
+background-position:0 0; opacity:1; line-height:100px; text-align:center; font-size:30px; color:#fff;
+}
+</style>
+<script src="js/move.js"></script>
+<script>
+   window.onload=function (){      
+       new playBananer('div1','btn1');
+   }
+
+   function playBananer(obj,btn){
+   	  this.obj=document.getElementById(obj);
+   	  this.Btn=document.getElementById(btn);
+   	  var C=7;
+   	  var R=4;
+   	  for(var c=0;c<C;c++){
+   	  	 for(var r=0;r<R;r++){
+            var oSpan=document.createElement('span');
+            this.obj.appendChild(oSpan);
+            oSpan.style.width=this.obj.offsetWidth/C+'px';
+            oSpan.style.height=this.obj.offsetHeight/R+'px';
+            oSpan.style.left=oSpan.offsetWidth*c+'px';
+            oSpan.style.top=oSpan.offsetHeight*r+'px';
+            oSpan.style.backgroundPosition=-oSpan.offsetLeft+'px -'+oSpan.offsetTop+'px';
+
+   	  	 }
+   	  }
+
+   	  this.aSpan=this.obj.children;
+   	  this.iNow=0;
+   	  var This=this;
+   	  this.bBtn=true;
+   	  this.Btn.onclick=function (){           
+            This.Change();
+   	  }
+   }
+   playBananer.prototype.Change=function (){
+        if(!this.bBtn){
+        	return 
+        }
+        this.bBtn=false;
+       for(var i=0;i<this.aSpan.length;i++){
+           this.aSpan[i].style.opacity='1';
+           this.aSpan[i].style.backgroundImage='url(images/'+this.iNow+'.jpg)';
+       }
+       this.iNow++;
+       console.log(this.iNow);
+       var This=this;
+       var count=0;
+       
+       if(this.iNow==3){
+       	  this.iNow=0;
+       }
+       this.obj.style.backgroundImage='url(images/'+this.iNow+'.jpg)';
+       for(var i=0;i<this.aSpan.length;i++){
+             (function (index){
+	             setTimeout(function (){
+	               move(This.aSpan[index],{opacity:0},{complete:function (){
+                    count++;
+                    if(count==This.aSpan.length){
+                     This.bBtn=true;
+                    }
+	               }})
+	            },1000*Math.random())
+             })(i)
+       }
+
+   }
+
+</script>
+</head>
+
+<body>
+<input type="button" value="下一张" id="btn1" />
+<div id="div1">
+</div>
+
+</body>
+</html>

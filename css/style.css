@@ -1,0 +1,255 @@
+
+*{ padding: 0;margin: 0;list-style: none;}
+#main { width: 100%;  background:url(../images/banner01.jpg)  no-repeat center center ;}
+.header_box{ width: 900px;height: 100px;  margin: 0 auto; position: relative;} 
+#banner{ width: 821px; margin: 0 auto;}
+.banner_list{ position: relative; width:715px; height: 422px; margin: 0 auto; }
+.banner_list ul{ height:100%;  position: absolute; left: 50%;  }
+.banner_list ul li{margin: 5px; opacity: 0; box-shadow: 0 10px 60px rgba(218,236,217,0.7); float: left; color: #fff; font-size:30px; line-height: 40px; text-align: center;  border-radius: 10px; width:40px; height: 40px; border: 5px solid #3ba938; }
+.banner_list ul li.active0{}
+.banner_list ul li.active1{border: 5px solid #FE5C0C;  box-shadow: 0 10px 60px rgba(218,236,217,0.7);}
+.banner_list ul li.active2{border: 5px solid #1D66D5;  box-shadow: 0 10px 60px rgba(218,236,217,0.7);}
+
+#startBtn{transition:1s all ease; z-index: 8; outline: none; width:60px; border-radius: 10px; position: absolute; top:calc(50% - 30px); left:calc(50% - 30px); height: 60px; font-size: 30px; color: #fff; border:3px solid #ccc;    background: none;  box-shadow:inset 0px 0px 5px #fff,0px 10px 60px rgba(245,205,97,0.7);}
+#startBtn:hover{color:#e37c00;transform:rotate(360deg) scale(1.5); cursor: pointer; border-radius: 50%;}
+#tradeBtn{transition:1s all ease; z-index: 8; outline: none; width:60px; position: absolute; top:calc(50% + 100px); left:calc(50% - 30px); height: 60px; font-size: 30px; color: #fff; border:3px solid #ccc;   border-radius: 10px;background: none;  box-shadow:inset 0px 0px 5px #fff,0px 10px 60px rgba(245,205,97,0.7);}
+#tradeBtn:hover{color:#e37c00;transform:rotate(-360deg) scale(1.5); cursor: pointer; border-radius: 50%;}
+
+#content{width: 100%;}
+
+
+
+/* 3D盒子样式 */
+#btns{ position:fixed;height:120px;left:0; top:calc(50% - 60px);}
+#btns li{ display:none;opacity: 0; width:100px;height:24px;margin:3px 0;background:#f60; text-align:right;padding-right:10px; font:14px/24px "微软雅黑";color:#fff; position:relative;left:-80px; transition:.5s; }
+#btns li:hover,#btns .active{left:0;}
+#btns .active{ background:#10a64c; }
+#banner_text{ position: relative;  color: #fff; font-size:40px;width: 250px; margin: 100px auto 0; }
+#banner_text li{opacity: 0; width: 100%; position: absolute; text-shadow:5px 10px 10px black;}
+#banner_text li.active{ opacity: 1;}
+.wrap{width:100%; height:350px;margin:30px auto; perspective:400px;}
+.wrap ul{width:100%; height:100%; opacity: 0; position:relative; transform-style:preserve-3d; transition:.5s; transform-origin:center center 400px;}
+.wrap li{width:100%; height:100%; position:absolute;top:0;  color:#fff; text-align:center; left:-100%;opacity:0;}
+.wrap li span{ border-radius:80px; box-shadow: 5px 5px 30px black,inset 0 0 10px black;
+  box-shadow: 5px 5px 30px #e7b971,inset 0 0 10px #e7b971;
+   display:block;height:350px;width:700px; margin:0 auto;}
+
+.wrap li span img{ display: block;  padding: 20px; width: 660px;height: 310px; border-radius: 80px;}
+.wrap li span a{ width: 100%;height: 100%; display: inline-block; background: none; color: none;}
+.wrap .next{left:100%; transform-origin:left; transform:rotateY(-90deg); opacity:1;}
+.wrap .prev{left:-100%; transform-origin:right;transform:rotateY(90deg);  opacity:1;}
+.wrap .active{transform:rotateY(0deg);left:0;  opacity:1;}
+/* .wrap li:nth-of-type(1) span{ }
+.wrap li:nth-of-type(2) span{ }
+.wrap li:nth-of-type(3) span{ }
+.wrap li:nth-of-type(4) span{ } */
+
+
+
+
+/* 折纸效果 */
+
+@keyframes open{
+	0%
+	{
+		transform:rotateX(-120deg);
+	}	
+	40%
+	{
+		transform:rotateX(30deg);
+	}
+	60%
+	{
+		transform:rotateX(-20deg);
+	}
+	80%
+	{
+		transform:rotateX(10deg);
+	}
+	100%
+	{
+		transform:rotateX(0deg);
+	}
+}
+.navlist{ opacity: 0; left: calc(50% + 200px); top:-200px;  width:200px;perspective:800px;position:absolute;}
+.navlist h2{ border: 2px solid #e37c00; height:26px;border-radius: 5px 5px 5px 5px;  text-align:center; font:16px/50px "微软雅黑"; line-height:26px;  color:#fff; position:relative;z-index:2;}
+.navlist div{ position:absolute; top:30px;left:0;transform-style:preserve-3d; transform-origin:top; transform:rotateX(-120deg); transition:.5s;}
+.navlist>div{ top:30px;}
+.navlist .open{animation:open 2s;transform:rotateX(0deg);}
+.navlist span{ display:block;width:200px;height:28px; font:14px/30px "宋体"; background:#505050; text-indent:15px; color:#fba951; transition:.5s; box-shadow:inset 0 0 30px 20px rgba(0,0,0,1);}
+.navlist .open>span{box-shadow:inset 0 0 30px 10px rgba(0,0,0,0);}
+.navlist span:hover{ background:#FF0;text-indent:30px;}
+
+
+/* 效果结束 */
+
+/* 导航效果 */
+
+.box{width:900px;     
+     position: relative;
+     top:0;
+     margin: 0 auto;
+     text-align: center;
+     }
+
+.box .link{display:inline-block;
+           width:205px;
+           height:220px;
+           margin:0 20px; 
+           position:relative;}
+
+.button{display:block;
+       
+	      text-align: left;
+	      width:180px;
+        height:50px;
+        border:2px solid rgba(255,255,255,0.8);
+        line-height:50px;
+        padding-left:20px;
+        box-sizing:border-box;
+        box-sizing:border-box;
+        -o-box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        margin:0 auto;
+        font-weight:bold;
+        font-size:18px;
+        text-decoration:none;
+        text-transform:uppercase;
+        font-family:Arial;
+        color:#2DCB70;
+        background:url(../images/allow.png) no-repeat 130px center;
+        -moz-transition:ease 0.4s;
+        -o-transition:ease 0.4s;
+        transition:ease 0.4s;
+        transition:ease 0.4s;
+        position:relative;}
+
+.button:hover{border:2px solid #fff;
+              background-position:140px center;}
+
+.button .line{position:absolute;
+               background:none; 
+              -moz-transition:ease 0.4s;
+              -o-transition:ease 0.4s;
+              transition:ease 0.4s;
+              transition:ease 0.4s;
+              box-shadow: 5px 5px 40px #fff;
+            }
+
+.button:hover .line{background:#fff;}
+
+.button .line-top{width:0px;
+                  height:2px;
+                  left:-110%;
+                  top:-2px;}
+
+.button:hover .line-top{width:100%;
+                        left:-2px;}
+
+
+.button .line-right{width:2px;
+                    height:0px;
+                    right:-2px;
+                    top:-110%;}
+
+.button:hover .line-right{height:100%;
+                          top:-2px;}
+
+
+.button .line-bottom{width:2px;
+                     height:0px;
+                     left:-2px;
+                     bottom:-110%;}
+
+.button:hover .line-bottom{height:100%;
+                           bottom:-2px;}
+
+.button .line-left{width:0px;
+                   height:2px;
+                   right:-110%;
+                   bottom:-2px;}
+
+.button:hover .line-left{width:100%;
+                         right:-2px;}
+
+.box .tip{position:absolute;
+           padding:0px 14px;
+           height:35px;
+           line-height:35px;
+           background:#2DCB70;
+           color:#fff;
+           top:160px;
+           font-size:16px;
+           font-weight:normal;
+           text-transform:none;
+           margin:0 auto;
+           opacity:0;
+           border-radius:3px}
+
+.tip em{font-style:normal;}
+
+.tip span{position:absolute;
+          width:0;
+          height:0;
+          overflow:hidden;
+          border:7px solid transparent;
+          border-top-color:#2DCB70;
+          left:50%;
+          margin-left:-3px;
+          bottom:-14px;}
+
+/* 第三屏效果 */
+
+
+
+
+
+#content ul{ position: relative; width:1040px;height:400px;margin: 0 auto; }
+#content li { border-radius: 20px; box-shadow: 5px 5px 20px #f44646, inset 0px 0px 10px #f44646; position: relative;opacity:0; width: 300px;height: 150px; line-height: 150px; overflow:hidden; font-size:30px; text-align:center;  margin-top:20px; margin-left: 20px; float: left;}
+#content li img {padding: 10px; width:280px; border-radius: 20px; }
+#content li a {text-decoration: none; border-radius: 20px; color: #e5e5e5;  display:block; z-index: 99; width: 100%;height: 100%; background: rgba(40, 37, 45,.7); position: absolute; left: -300px;top: 0;}
+.page_list{ width: 120px; height: 30px; margin: 50px auto 0;}
+.page_list a{ transition:.5s all ease;  font-weight: bold; margin-left: 20px; font-size:30px;  line-height: 30px; text-align: center; text-decoration: none; color: orange; float: left; display: inline-block; width: 30px;height: 30px; border: 2px solid #fff;}
+
+.page_list a:hover{ transform: rotate(360deg); border-radius:50%; }
+
+
+
+
+
+
+
+
+
+
+/* 第四屏 */
+
+
+#message{ width: 940px; left: 50%; height: 520px;  margin-left: -425px; color: #fff;  position: relative; }
+#message ul{ opacity: 0; float: left; margin-right:50px;  width: 400px; height: 520px; border: 10px solid #fe5c0c; box-shadow: rgba(249, 134, 78, 0.74902) 0px 20px 40px, 0px 0px 10px #f9864e inset; text-align: center;}
+#message ul h2{ opacity: 0;padding-top: 20px; width: 100%; height: 20px; display: block;}                         
+#message ul li {transition:1s; opacity: 0; width: 50%; font-size: 20px; margin-top: 25px; float: left;}
+
+
+
+
+
+
+
+/* 第五屏效果 */
+
+.gradient {
+  /* background:-webkit-linear-gradient(top, #FFFFFF, #ffe7e2) */
+   border: 5px solid #F5DA1E; box-shadow: inset 5px 5px 10px black;
+}
+#curriculum { width:400px; height:48px;/*height:230px*/ overflow:hidden; font-family:微软雅黑; position:absolute; top:320px;/*top:190px*/ left:50%; margin-left:-200px; opacity:0;box-shadow: rgba(216, 208, 125,0.74902) 0px 30px 80px; transition:.6s;}
+#curriculum h2 { height:48px; position:relative; z-index:1; }
+#curriculum h2:hover { box-shadow:0px 20px 40px rgba(148, 92, 78, 0.1); }
+#curriculum h2 strong { display:block; height:48px; background:url(../images/h2_ico.png) no-repeat 20px center; text-indent:52px; font-family:微软雅黑; font-size:14px; color:#f88a71; line-height:48px; font-weight:normal; }
+#curriculum .close { width:20px; height:20px; background:url(../images/close.png) no-repeat; position:absolute; top:15px; right:16px; transition:0.5s;}
+#curriculum .close:hover{ transform:rotate(360deg);}
+#curriculum .close:active{transform:rotate(0deg);}
+#information { width: 100%;height: 100%; position:relative;}
+#information li{opacity:0; width:100%;margin-top: 10px;  text-align: center; color: #fff; font-size: 20px;}
+
+

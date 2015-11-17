@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="智能社 - zhinengshe.com" />
+<meta name="copyright" content="智能社 - zhinengshe.com" />
+<title>智能社 - www.zhinengshe.com</title>
+<style>
+*{marigin:0;padding:0;list-style:none;}
+#ul1{ position:relative;width:510px; height:510px; margin:30px auto;}
+#ul1 li{float:left;width:150px; height:150px; margin:10px; }
+#ul1 li img{width:100%; height:100%;}
+.box{ border:4px dashed red;}
+</style>
+<script src="js/move.js"></script>
+<script>
+window.onload = function(){
+   new darg('ul1','btn1');	
+};
+function darg(id,btn){
+  this.oBtn = document.getElementById(btn);
+  this.oUl = document.getElementById(id);
+  this.aLi = this.oUl.children;
+  this.zIndex = 1;
+  this.aPos=[];  
+  this.arr=[];
+  var This=this;  
+    for(var i=0;i<this.aLi.length;i++){
+     this.aPos[i]={left:this.aLi[i].offsetLeft,top:this.aLi[i].offsetTop};
+      this.aLi[i].style.left=this.aPos[i].left+'px';
+      this.aLi[i].style.top=this.aPos[i].top+'px';  	
+    }
+    for(var i=0;i<this.aLi.length;i++){
+    	this.aLi[i].style.position='absolute';
+        this.aLi[i].style.margin='0';
+        this.aLi[i].index=this.arr[i]||i;
+
+         this.DargLi(this.aLi[i]);  
+    }
+    this.oBtn.onclick=function(){
+      This.Random();
+    }
+}
+
+darg.prototype.Random=function(){
+   this.aPos.sort(function (){
+       return Math.random()-0.5;
+   })
+   for(var i=0;i<this.aLi.length;i++){
+        move(this.aLi[i],{left:this.aPos[i].left,top:this.aPos[i].top})
+        this.aLi[i].index=i;
+        this.arr.push(this.aLi[i].index);
+   }
+
+}
+
+darg.prototype.DargLi=function(obj){
+       var This=this;
+       this.disX=0;
+       this.disY=0;
+       obj.onmousedown=function(ev){
+          This.MouseDown(ev,obj)
+       return false;
+       obj.setCapture&&obj.setCapture();
+       }    
+}
+darg.prototype.MouseDown=function(ev,obj){
+     var oEvent=ev||event;
+     var This=this;
+     this.disX=oEvent.clientX-obj.offsetLeft;
+     this.disY=oEvent.clientY-obj.offsetTop;
+     clearInterval(obj.timer);
+     obj.style.zIndex=this.zIndex++;
+     document.onmousemove=function(ev){
+         This.MouseMove(ev,obj)
+     }
+     document.onmouseup=function(){
+         This.MouseUp(obj)
+     }
+}
+darg.prototype.MouseMove=function(ev,obj){
+        var oEvent=ev||event;
+     obj.style.left=oEvent.clientX-this.disX+'px';
+     obj.style.top=oEvent.clientY-this.disY+'px';
+
+     this.oNear=this.FindeNear(obj)
+     if(this.oNear){
+         for(var i=0;i<this.aLi.length;i++){
+             this.aLi[i].className='';
+          }
+         this.oNear.className='box';
+      }
+}
+darg.prototype.MouseUp=function(obj){
+	 document.onmousemove=null;
+	 document.onmouseup=null;
+   this.oNear=this.FindeNear(obj)
+  
+   if(this.oNear){
+     var m=this.oNear.index;
+      this.oNear.index=obj.index;      
+      obj.index=m;     
+      move(this.oNear,{left:this.aPos[this.oNear.index].left,top:this.aPos[this.oNear.index].top});     
+      
+    }
+    move(obj,{left:this.aPos[obj.index].left,top:this.aPos[obj.index].top});
+
+	 obj.releaseCapture&&obj.releaseCapture();
+
+}
+darg.prototype.PengZhuang=function(obj1,obj2){
+    var l1=obj1.offsetLeft;
+    var r1=l1+obj1.offsetWidth;
+    var t1=obj1.offsetTop;
+    var b1=t1+obj1.offsetHeight;
+
+    var l2=obj2.offsetLeft;
+    var r2=l2+obj2.offsetWidth;
+    var t2=obj2.offsetTop;
+    var b2=t2+obj2.offsetHeight;
+
+    if(l1>r2||r1<l2||t1>b2||b1<t2){
+
+      return false ;
+    }else {
+      return true;
+    }
+	
+}
+darg.prototype.JiSuan=function (obj1,obj2){
+   var a=obj1.offsetLeft-obj2.offsetLeft;
+   var b=obj1.offsetTop-obj2.offsetTop;
+   return Math.sqrt(a*a+b*b);
+}
+
+darg.prototype.FindeNear=function(obj){
+    var iMinNum=9999999;
+    var iMinZindex=-1;
+    for(var i=0;i<this.aLi.length;i++){
+      if(this.aLi[i]==obj)continue;
+      if(this.PengZhuang(obj,this.aLi[i])){
+         var oTmp=this.JiSuan(obj,this.aLi[i]);
+         if(iMinNum>oTmp){
+            iMinNum=oTmp;
+            iMinZindex=i;
+         }
+      }
+    }
+    if(iMinZindex==-1){
+      return null
+    }else {
+      return this.aLi[iMinZindex];
+    }
+
+}
+
+
+</script>
+</head>
+
+<body>
+
+<input id="btn1" type="button" value="随机一换" />
+
+<ul id="ul1">
+	<li><img src="cat/1.jpg" /></li>
+	<li><img src="cat/2.jpg" /></li>
+	<li><img src="cat/3.jpg" /></li>
+	<li><img src="cat/4.jpg" /></li>
+	<li><img src="cat/5.jpg" /></li>
+	<li><img src="cat/6.jpg" /></li>
+	<li><img src="cat/7.jpg" /></li>
+	<li><img src="cat/8.jpg" /></li>
+	<li><img src="cat/9.jpg" /></li>
+</ul>
+
+</body>
+</html>

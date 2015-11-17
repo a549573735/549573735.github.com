@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+body{ text-align:center; background:#000;}
+#c1{ background:url(images/game_bg_2_hd.jpg) no-repeat;}
+</style>
+
+
+<script>
+
+function loadImages(arr,fnSucc){
+	  var loaded=0;
+	  var json={};
+	  for(var i=0;i<arr.length;i++){
+		  var oImgs=new Image;
+		  loaded++;
+		  if(loaded==arr.length){
+
+              fnSucc(json);
+			  }
+		 oImgs.src=arr[i]; 
+		 var name=arr[i].split('.')[0].split('/')[1];
+		 json[name]=oImgs;
+		
+		}
+}
+
+  window.onload=function(){
+	  var oC=document.getElementById('c1');
+	  var gd=oC.getContext("2d");
+	  
+	  loadImages(['images/bullet1.png','images/cannon1.png','images/coinAni2.png','images/fish1.png'],function(imgs){
+		  setInterval(function(){
+			gd.clearRect(0,0,oC.width,oC.height);
+			
+			for(var i=0;i<aBull.length;i++){
+			 gd.drawImage(imgs['bullet1'],aBull[i].x,aBull[i].y) 
+				
+				}
+			gd.drawImage(imgs['cannon1'],0,0,74,66,gun_x,gun_y,74,66); 
+			
+			for(var i=0;i<aFish.length;i++){
+				
+			 gd.drawImage(imgs['fish1'],0,parseInt(aFish[i].frame)*36,55,36,aFish[i].x,aFish[i].y,55,36)
+				}
+			 
+			  
+			  
+			  },1000/60)
+		  
+		  setInterval(function(){
+           for(var i=0;i<aBull.length;i++){
+			   aBull[i].y-=4;  
+			   }		
+			   
+			 for(var i=0;i<aFish.length;i++){
+				aFish[i].x+=1;
+				aFish[i].frame+=0.1; 
+				 if(aFish[i].frame>=4){
+					 aFish[i].frame=0;
+					 }
+				 }  
+				 
+			for(var i=0;i<aBull.length;i++){
+				
+				for(var j=0;j<aFish.length;j++){
+					if(pengzhuang(aBull[i].x,aBull[i].y,24,26,aFish[j].x,aFish[j].y,55,36)){
+						aFish.splice(j,1);
+						j--;
+						aBull.splice(i,1);
+						i--;					
+						}	
+					}
+				}	 		 
+			},1000/60)
+		  
+		  
+		  
+		  
+		  var gun_x=475;
+		  var gun_y=680;
+		  document.onkeydown=function(ev){
+			  var oEvent=ev||event;
+			  switch(oEvent.keyCode){
+				  case 37:
+				  gun_x-=5;
+				  break		  
+				  case 39:
+				  gun_x+=5;
+				  break 
+				  case 32:
+				  aBull.push({
+					  x:gun_x+25,
+					  y:gun_y+10
+					  
+					  })
+				  
+				  break;				  
+				  }			  
+			  }  
+		  var aBull=[]
+		  var aFish=[];
+		  setInterval(function(){
+			 aFish.push({
+				 x:-60,
+				 y:Math.random()*680,
+				 frame:0
+				 
+				 }) 
+			  
+			  
+			  
+			  },300)
+		  
+		  function pengzhuang(x1,y1,w1,h1,x2,y2,w2,h2){
+			  var l1=x1;
+			  var r1=x1+w1;
+			  var t1=y1;
+			  var b1=y1+h1;
+			  
+			  var l2=x2;
+			  var r2=x2+w2;
+			  var t2=y2;
+			  var b2=y2+h2;
+			  
+			  if(l1>r2||r1<l2||t1>b2||b1<t2){
+				  
+				return false;  
+				  }else {
+					  
+				return true;	  
+					  }
+			  
+			  
+			  
+			  
+			  }
+		  
+		  
+		  
+		  })
+	  
+	  }
+ 
+</script>
+
+</head>
+
+<body>
+
+<canvas id="c1" width="1024" height="768">
+</canvas>
+</body>
+</html>
